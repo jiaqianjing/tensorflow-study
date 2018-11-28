@@ -1,4 +1,3 @@
-# 如果是python2的代码，会有不兼容，这里把python3的特性引入，使得python2也可以运行该代码。
 from __future__ import absolute_import  # 绝对引用
 from __future__ import division  # 精确除法
 from __future__ import print_function  # print函数
@@ -8,6 +7,26 @@ import os
 import tensorflow as tf
 # xrange返回一个生成器，range返回一个列表，xrange在生成大范围数据的时候更节省内存。
 from six.moves import xrange
+
+"""
+cifar10 的二进制数据集格式：
+
+    文件：(5 个训练集 1 个测试集, 每个文件 10000 个样本)
+        data_batch_1.bin,
+        …, 
+        data_batch_5.bin,
+        test_batch.bin
+
+    文件内容(1 + 3072 * 10000 字节数)：
+        第一个字节： 标签， 范围 0-9 分别代表十类
+        后面 3072 个字节 (3 * 1024)：
+            1024：red channel (32 * 32)
+                32:  red channel 第一行像素
+                ...: red channel 中间 30 行像素
+                32:  red channel 最后一行像素
+            1024: green channel
+            1024: blue channel
+"""
 
 IMAGE_SIZE = 24  # 图像尺寸
 # 描述 CIFAR-10 数据的全局常量。
